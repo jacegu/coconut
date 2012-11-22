@@ -41,7 +41,7 @@ puts ENV['RACK_ENV']                #=> development
 MyApp::config.database.host         #=> localhost
 puts ENV['RACK_ENV'] = :production
 MyApp::config.database.host         #=> domain.org/db
-
+```
 
 ###Changing how the environment is detected
 Right now coconut uses the environment variable `RACK_ENV` to detect the
