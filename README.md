@@ -1,4 +1,4 @@
-#coconut [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/jacegu/coconut)
+#coconut   [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/jacegu/coconut)
 
 A coconfiguration tool for your Ruby projects.
 
