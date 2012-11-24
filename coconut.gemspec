@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = Coconut::VERSION
   gem.authors       = ["Javier Acero"]
   gem.email         = ["javier@path11.com"]
-  gem.description   = %q{A co-configuration tool for your Ruby projects}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{A coconfiguration tool for your Ruby applications }
+  gem.summary       = %q{Coconut is a simple DSL that allows you to easily write and query your application's configuration with pure Ruby.}
+  gem.homepage      = "http://github.com/jacegu/coconut"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
