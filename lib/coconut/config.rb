@@ -9,7 +9,7 @@ module Coconut
     end
 
     def to_hash
-      Hash.new[@properties]
+      @properties.dup
     end
 
     private

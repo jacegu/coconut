@@ -1,4 +1,5 @@
 require_relative 'config'
+require_relative 'dsl/environment'
 
 module Coconut
   class BlankSlate < BasicObject
@@ -46,32 +47,11 @@ module Coconut
     private
 
     def environment(environment, &environment_config)
-      @config = EnvironmentRunner.run(&environment_config) if current? environment
+      @config = Dsl::Environment.run(&environment_config) if current? environment
     end
 
     def current?(environment)
       @current_environment.to_sym == environment.to_sym
-    end
-  end
-
-  class EnvironmentRunner
-    def self.run(&config)
-      new.run(&config)
-    end
-
-    def initialize
-      @properties = {}
-    end
-
-    def run(&config)
-      instance_eval &config
-      Config.new(@properties)
-    end
-
-    private
-
-    def method_missing(name, *args, &block)
-      @properties[name] = args.first
     end
   end
 end

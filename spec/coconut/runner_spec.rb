@@ -18,14 +18,3 @@ describe Coconut::AssetRunner do
     config.property.should eq 'value in current'
   end
 end
-
-describe Coconut::EnvironmentRunner do
-  it 'creates the environment config' do
-    config = described_class.run do
-      property 'value'
-      other    'other'
-    end
-    config.property.should eq 'value'
-    config.other.should eq 'other'
-  end
-end
