@@ -1,34 +1,35 @@
 require 'coconut/config'
 
 describe Coconut::Config do
-  let(:asset_config) { Coconut::Asset }
+  subject          { described_class.new(properties) }
+  let(:properties) { Hash[property: 'value', other: 'other'] }
 
-  it 'configures a series of assets' do
-    subject = described_class.new(:current) do
-      ftp {}
-      ssh {}
+  context 'newly created' do
+    it 'has no property methods' do
+      (subject.methods - Object.instance_methods).should eq [:to_hash]
     end
-    subject.should have_key 'ftp'
-    subject.should have_key 'ssh'
-  end
 
-  it 'runs the configuration of each asset' do
-    ftp_config = lambda {}
-    ssh_config = lambda {}
-    asset_config.should_receive(:new).with(:current, &ftp_config)
-    asset_config.should_receive(:new).with(:current, &ssh_config)
-    described_class.new(:current) do
-      ftp &ftp_config
-      ssh &ssh_config
+    it 'responds to every property' do
+      subject.should respond_to :property, :other
     end
   end
 
-  it 'assets can have (almost) any name' do
-    subject = described_class.new(:current) do
-      __id__  {}
-      equal?  {}
-      inspect {}
+  context 'when a property is queried' do
+    it 'returns the property value' do
+      subject.property.should eq 'value'
+      subject.other.should eq 'other'
     end
-    ['__id__', 'equal?', 'inspect'].each { |key| subject.should have_key(key) }
+
+    it 'defines a new method to access the property' do
+      subject.methods.should_not include(:property, :other)
+      subject.property
+      subject.methods.should include(:property)
+      subject.other
+      subject.methods.should include(:property, :other)
+    end
+  end
+
+  it 'can be transformed to a hash' do
+    subject.to_hash.should eq properties
   end
 end
