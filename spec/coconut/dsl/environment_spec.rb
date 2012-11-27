@@ -13,6 +13,6 @@ describe Coconut::Dsl::Environment do
   it "doesn't allow properties with colliding names" do
     expect {
       described_class.configure { object_id '11' }
-    }.to raise_error Coconut::InvalidName, /object_id/
+    }.to raise_error Coconut::Dsl::InvalidName, /object_id/
   end
 end
