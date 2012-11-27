@@ -2,7 +2,7 @@ require 'coconut/dsl/asset'
 
 describe Coconut::Dsl::Asset do
   it 'creates the asset config for the given environment' do
-    asset_config = described_class.new(:current).run do
+    asset_config = described_class.configure(:current) do
       environment(:other)   { property 'value in other' }
       environment(:current) { property 'value in current' }
     end
@@ -10,14 +10,14 @@ describe Coconut::Dsl::Asset do
   end
 
   it 'can setup different environments at the same time' do
-    asset_config = described_class.new(:current).run do
+    asset_config = described_class.configure(:current) do
       environment(:other, :current) { property 'value in other and current' }
     end
     asset_config.fetch(:property).should eq 'value in other and current'
   end
 
   it 'can setup environments step by step' do
-    asset_config = described_class.new(:current).run do
+    asset_config = described_class.configure(:current) do
       environment(:other, :current) { property 'value in other and current' }
       environment(:other)   { thing 'thing in other' }
       environment(:current) { thing 'thing in current' }
@@ -26,8 +26,16 @@ describe Coconut::Dsl::Asset do
     asset_config.fetch(:thing).should eq 'thing in current'
   end
 
-  it 'has alternative ways of configuring an environment' do
-    asset_config = described_class.new(:current).run do
+  it 'allows properties to be overriden' do
+    asset_config = described_class.configure(:current) do
+      environment(:other, :current) { property 'value in other and current' }
+      environment(:current) { property 'only in current' }
+    end
+    asset_config.fetch(:property).should eq 'only in current'
+  end
+
+  it 'has alternate ways of configuring an environment' do
+    asset_config = described_class.configure(:current) do
       env(:current)          { property1 1 }
       environment(:current)  { property2 2 }
       environments(:current) { property3 3 }

@@ -14,3 +14,7 @@ end
 Then /^the configured value should be "(.*?)"$/ do |expected_result|
   eval(@query).should eq expected_result
 end
+
+After do
+  MyApp.singleton_class.instance_eval { undef_method :config }
+end

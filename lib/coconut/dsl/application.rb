@@ -5,18 +5,18 @@ module Coconut
     class Application
       def initialize(current_environment)
         @current_environment = current_environment
-        @config = {}
       end
 
       def run(&config)
+        @assets_config = {}
         instance_eval &config
-        Config.new(@config)
+        Config.new(@assets_config)
       end
 
       private
 
-      def method_missing(name, *args, &block)
-        @config[name] = Asset.new(@current_environment).run(&block)
+      def method_missing(asset, *args, &config)
+        @assets_config[asset] = Asset.configure(@current_environment, &config)
       end
     end
   end

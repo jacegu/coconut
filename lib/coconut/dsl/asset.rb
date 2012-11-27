@@ -4,12 +4,16 @@ require_relative './environment'
 module Coconut
   module Dsl
     class Asset
+      def self.configure(environment, &config)
+        new(environment).run(&config)
+      end
+
       def initialize(current_environment)
         @current_environment = current_environment
-        @properties = {}
       end
 
       def run(&config)
+        @properties = {}
         instance_eval &config
         @properties
       end
