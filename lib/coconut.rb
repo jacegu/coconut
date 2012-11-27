@@ -1,10 +1,10 @@
 require_relative 'coconut/version'
-require_relative 'coconut/runner'
+require_relative 'coconut/dsl/application'
 
 module Coconut
   def self.configure(namespace, &assets)
     raise "#{namespace} already has a config method" if namespace.respond_to? :config
-    define_config_method namespace, Runner.new(current_environment).run(&assets)
+    define_config_method namespace, Dsl::Application.new(current_environment).run(&assets)
   end
 
   def self.current_environment
