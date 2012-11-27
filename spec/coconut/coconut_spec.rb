@@ -12,8 +12,29 @@ describe Coconut do
     MyModule.should respond_to(:config)
   end
 
-  it 'raises an error if the namespace already has a config method' do
-    expect { Coconut.configure(MyConfig, :asset){} }.to raise_error
+  it "allows the app's configuration to be run twice" do
+    Coconut.configure(MyClass) { asset { env(:development){ property 'initial value' } } }
+    Coconut.configure(MyClass) { asset { env(:development){ property 'latest value'  } } }
+    MyClass::config.asset.property.should eq 'latest value'
+  end
+
+  context 'finding out the environment' do
+    before { Coconut.instance_variable_set(:@__coconut_environment, nil) }
+
+    it 'uses the expression provided by the user if any' do
+      Coconut.take_environment_from { :somewhere }
+      Coconut.environment.should eq :somewhere
+    end
+
+    it 'uses the RACK_ENV environment variable by default' do
+      ENV['RACK_ENV'] = 'rack_env'
+      Coconut.environment.should eq 'rack_env'
+    end
+
+    it 'uses :development as environment if RACK_ENV is not defined' do
+      ENV['RACK_ENV'] = nil
+      Coconut.environment.should eq :development
+    end
   end
 end
 

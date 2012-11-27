@@ -2,26 +2,26 @@ require_relative 'coconut/version'
 require_relative 'coconut/dsl/application'
 
 module Coconut
-  def self.configure(namespace, &assets)
-    raise "#{namespace} already has a config method" if namespace.respond_to? :config
-    define_config_method namespace, Dsl::Application.new(current_environment).run(&assets)
+  include Dsl
+
+  def self.configure(namespace, &config)
+    define_config_method namespace, Application.configure(environment, &config)
   end
 
-  def self.current_environment
+  def self.environment
+    return @__coconut_environment.() if @__coconut_environment
     ENV['RACK_ENV'] || :development
+  end
+
+  def self.take_environment_from(&block)
+    @__coconut_environment = block
   end
 
   private
 
   def self.define_config_method(namespace, configuration)
-    singleton_class_of(namespace).instance_eval do
-      define_method :config do
-        @_coconut_configuration ||= configuration
-      end
+    namespace.singleton_class.instance_eval do
+      define_method(:config) { @__coconut_configuration ||= configuration }
     end
-  end
-
-  def self.singleton_class_of(class_or_module)
-    class << class_or_module; self; end
   end
 end
