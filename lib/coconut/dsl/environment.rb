@@ -2,23 +2,22 @@ require_relative 'blank_slate'
 require_relative '../config'
 
 module Coconut
-
   class InvalidName < Exception
   end
 
   module Dsl
     class Environment < BlankSlate
-      def self.run(&config)
-        new.run(&config)
+      def self.configure(&config)
+        new.configure(&config)
       end
 
       def initialize
         @properties = {}
       end
 
-      def run(&config)
+      def configure(&config)
         instance_eval &config
-        Config.new(@properties)
+        @properties
       end
 
       private

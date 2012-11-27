@@ -6,20 +6,29 @@ module Coconut
     class Asset
       def initialize(current_environment)
         @current_environment = current_environment
+        @properties = {}
       end
 
       def run(&config)
         instance_eval &config
-        @config
+        @properties
       end
 
       private
 
-      def environment(environment, &environment_config)
-        @config = Dsl::Environment.run(&environment_config) if current? environment
+      def environment(*environments, &config)
+        environments.each { |environment| __configure(environment, config) }
       end
 
-      def current?(environment)
+      alias :env          :environment
+      alias :envs         :environment
+      alias :environments :environment
+
+      def __configure(environment, config)
+        @properties.merge! Environment.configure(&config) if __current?(environment)
+      end
+
+      def __current?(environment)
         @current_environment.to_sym == environment.to_sym
       end
     end
