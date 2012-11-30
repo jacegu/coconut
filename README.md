@@ -187,12 +187,12 @@ You can find out the forbidden property (and asset) names by calling the method:
 ```ruby
 Coconut::Dsl::BlankSlate.__forbidden_names
 # => [:respond_to?, :to_hash, :nil?, :===, :=~, :!~, :eql?, :hash, :<=>, :class, :singleton_class, :clone, :dup,
-:initialize_dup, :initialize_clone, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?,
-:to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods,
-:instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?,
-:instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to_missing?, :extend, :display, :method,
-:public_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval,
-:instance_exec, :__send__, :__id__, :instance_eval, :__send__, :object_id, :__taken?, :__taken_error_message]
+#     :initialize_dup, :initialize_clone, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?,
+#     :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods,
+#     :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?,
+#     :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to_missing?, :extend, :display, :method,
+#     :public_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval,
+#     :instance_exec, :__send__, :__id__, :instance_eval, :__send__, :object_id, :__taken?, :__taken_error_message]
 ```
 
 If you want to use the methods from `Kernel` that are widely available
