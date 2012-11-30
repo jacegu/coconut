@@ -2,7 +2,6 @@ require 'coconut'
 
 class  MyClass; end
 module MyModule; end
-module MyConfig; def self.config; end; end;
 
 describe Coconut do
   it 'defines a config method in the provided namespace' do
