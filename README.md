@@ -26,20 +26,16 @@ assets on different environments**.
 ```ruby
 require 'coconut'
 
-module MyApp
-  include Coconut
+Coconut.configure MyApp do
+  twitter do
+    environments :development, :test do
+      consumer_key     'development_key'
+      consumer_secret  'development_secret'
+    end
 
-  configure do
-    twitter do
-      environments :development, :test do
-        consumer_key     'development_key'
-        consumer_secret  'development_secret'
-      end
-
-      environment :production do
-        consumer_key     'production_key'
-        consumer_secret  'production_secret'
-      end
+    environment :production do
+      consumer_key     'production_key'
+      consumer_secret  'production_secret'
     end
   end
 end
@@ -84,8 +80,7 @@ which environment the application is running on.
 ```ruby
 require 'coconut'
 
-module MyApp
-  include Coconut
+Coconut.configure MyApp do
 
   # your application configuration
 
@@ -113,8 +108,7 @@ If your application should not use the RACK_ENV environment variable to
 determine which configuration to use you can tell Coconut how to find out:
 
 ```ruby
-module MyApp
-  include Coconut
+Coconut.configure MyApp do
 
   environment { MyApp::find_out_environment }
 
@@ -148,8 +142,7 @@ If the file that has the *Application* level configuration is in that folder
 too it won't be run again:
 
 ```ruby
-module MyApp
-  include Coconut
+Coconut.configure MyApp do
 
   assets_folder 'path/to/folder'
 
@@ -173,8 +166,7 @@ have the following project structure:
 You could have an *Application* block on the `config.rb` file like this:
 
 ```ruby
-module MyApp
-  include Coconut
+Coconut.configure MyApp do
 
   assets_folder '.'
 
@@ -207,8 +199,7 @@ of providing the path to the folder to the asset configuration files you provide
 the path to every one of them:
 
 ```ruby
-module MyApp
-  include Coconut
+Coconut.configure MyApp do
 
   assets_files 'database.rb', 'oauth.rb', 's3.rb'
 
