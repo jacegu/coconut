@@ -81,6 +81,17 @@ of the *Assets* your application has. It may also contain information about
 where Coconut should look for configuration files and how it should find out
 which environment the application is running on.
 
+```ruby
+require 'coconut'
+
+module MyApp
+  include Coconut
+
+  # your application configuration
+
+end
+```
+
 You will enter this block by opening your application's namespace and including
 the Coconut module. When you do that you will trigger the configuration of
 your app. Coconut will then detect the environment, run the configuration and
@@ -90,7 +101,7 @@ mixed in. That method will return the `Coconut::Config` object with your
 application's configuration.
 
 That means:
-* You only need to make sure that you require the config file that includes the 
+* You only need to make sure that you require the config file that includes the
   *Application* block for your configuration to be run.
 * Your configuration will be run just once (unless you use `Kernel::load`)
 * If there is a `config` method on your namespace it will be overriden.
@@ -127,11 +138,84 @@ your application section will only be composed of *Assets*. You will need
 nothing more. The first example of this README uses this Coconut flavour.
 
 **b) Folder**
-TODO
+
+*NOT DEVELOPED YET*
+
+If you want to split your configuration in several files and put them in the
+same folder you will be able to tell Coconut how to find them. Coconut will
+load every file in that folder and run them as if they were Coconut scripts.
+If the file that has the *Application* level configuration is in that folder
+too it won't be run again:
+
+```ruby
+module MyApp
+  include Coconut
+
+  assets_folder 'path/to/folder'
+
+end
+```
+
+This allows you to write your files focusing only on *Assets*, given that
+when Coconut will run then within the *Application* block. So you could
+have the following project structure:
+
+    .
+    ..
+    /config
+      config.rb
+      database.rb
+      oauth.rb
+      s3.rb
+    /lib
+    /spec
+
+You could have an *Application* block on the `config.rb` file like this:
+
+```ruby
+module MyApp
+  include Coconut
+
+  assets_folder '.'
+
+end
+```
+
+And each of the asset files would only include asset configuration:
+
+```ruby
+database do
+  environment :development do
+    #...
+  end
+
+  environment :staging, :production do
+    #...
+  end
+end
+```
+
+You would only need to require the `config/config.rb` file to access the
+configuration.
 
 **c) List of files**
-TODO
 
+*NOT DEVELOPED YET*
+
+This flavour is exactly like the *folder* one with the difference that instead
+of providing the path to the folder to the asset configuration files you provide
+the path to every one of them:
+
+```ruby
+module MyApp
+  include Coconut
+
+  assets_files 'database.rb', 'oauth.rb', 's3.rb'
+
+end
+```
+
+Notice that the paths are relative to where the `config.rb` file is located.
 
 ### Asset
 Each of this blocks represent one of the assets of your application. Inside
@@ -187,12 +271,13 @@ You can find out the forbidden property (and asset) names by calling the method:
 ```ruby
 Coconut::Dsl::BlankSlate.__forbidden_names
 # => [:respond_to?, :to_hash, :nil?, :===, :=~, :!~, :eql?, :hash, :<=>, :class, :singleton_class, :clone, :dup,
-#     :initialize_dup, :initialize_clone, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?,
-#     :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods,
-#     :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?,
-#     :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to_missing?, :extend, :display, :method,
-#     :public_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval,
-#     :instance_exec, :__send__, :__id__, :instance_eval, :__send__, :object_id, :__taken?, :__taken_error_message]
+#     :initialize_dup, :initialize_clone, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze,
+#     :frozen?, :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods,
+#     :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set,
+#     :instance_variable_defined?, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send,
+#     :respond_to_missing?, :extend, :display, :method, :public_method, :define_singleton_method, :object_id,
+#     :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__,
+#     :instance_eval, :__send__, :object_id, :__taken?, :__taken_error_message]
 ```
 
 If you want to use the methods from `Kernel` that are widely available
