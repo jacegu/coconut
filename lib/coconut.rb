@@ -9,7 +9,7 @@ module Coconut
   end
 
   def self.environment
-    return @__coconut_environment.() if @__coconut_environment
+    return @__coconut_environment.() unless @__coconut_environment.nil?
     ENV['RACK_ENV'] || :development
   end
 
