@@ -131,8 +131,6 @@ nothing more. The first example of this README uses this Coconut flavour.
 
 **b) Folder**
 
-*NOT DEVELOPED YET*
-
 If you want to split your configuration in several files and put them in the
 same folder you will be able to tell Coconut how to find them. Coconut will
 load every file in that folder and run them as if they were Coconut scripts.
@@ -141,9 +139,7 @@ too it won't be run again:
 
 ```ruby
 Coconut.configure MyApp do
-
-  assets_folder 'path/to/folder'
-
+  asset_folder 'path/to/folder'
 end
 ```
 
@@ -161,13 +157,12 @@ have the following project structure:
     /lib
     /spec
 
-You could have an *Application* block on the `config.rb` file like this:
+You could have an *Application* block on the `config.rb` file like this
+(assuming that you run the application from the root of the project):
 
 ```ruby
 Coconut.configure MyApp do
-
-  assets_folder '.'
-
+  asset_folder 'config'
 end
 ```
 
@@ -198,9 +193,7 @@ the path to every one of them:
 
 ```ruby
 Coconut.configure MyApp do
-
   assets_files 'database.rb', 'oauth.rb', 's3.rb'
-
 end
 ```
 
