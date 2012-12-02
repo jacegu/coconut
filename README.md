@@ -109,9 +109,7 @@ determine which configuration to use you can tell Coconut how to find out:
 
 ```ruby
 Coconut.configure MyApp do
-
   environment { MyApp::find_out_environment }
-
   # ...
 end
 ```
@@ -217,24 +215,20 @@ An *Asset* block consist of the asset name and a Ruby block containing it's
 configuration in each of the environments:
 
 ```ruby
-#...
 asset_name do
   environment(:production)         { property 'value on production' }
   environment(:development, :test) { property 'value on test and development' }
 end
-#...
 ```
 
 You can specify one or more environments at the same time. You can also use any
 of the aliases the `environment` method has:
 
 ```ruby
-#...
 env(:development, :test)          { property 'value' }
 envs(:development, :test)         { property 'value' }
 environment(:development, :test)  { property 'value' }
 environments(:development, :test) { property 'value' }
-#...
 ```
 
 An *Asset* can have *almost* any name. There are some restrictions that apply to
@@ -252,9 +246,7 @@ the `Config` object. Coconut will raise an error if you use one of the reserved
 names:
 
 ```ruby
-#...
 environment(:development) { object_id 11 }
-#...
 # => Coconut::Dsl::InvalidName: object_id can't be used as property name: it will collide with Coconut::Config methods
 ```
 
@@ -275,12 +267,10 @@ If you want to use the methods from `Kernel` that are widely available
 on Ruby objects you will need to prepend the module to the method call:
 
 ```ruby
-#...
 environment(:development) do
   puts 'here'         # declaring a property named "puts"
   Kernel::puts 'here' # printing "here" to STDOUT
 end
-#...
 ```
 
 Values can be any Ruby object, from a simple integer or string to a lambda.
@@ -289,7 +279,6 @@ to environment will be evaluated in a different context:
 you won't be able to call methods without specifying their receiver.
 
 ```ruby
-#...
 environment :development do
   four      2 + 2
   arguments ARGV
@@ -299,7 +288,6 @@ environment :development do
     disable :dump_errors, :some_custom_option
   end
 end
-#...
 ```
 
 ## Why coconut?
