@@ -1,4 +1,5 @@
 require_relative 'asset'
+require_relative 'asset_folder'
 
 module Coconut
   module Dsl
@@ -18,6 +19,10 @@ module Coconut
       end
 
       private
+
+      def asset_folder(path)
+        instance_eval AssetFolder.config_from(path, $LOADED_FEATURES + [::File.expand_path($0)])
+      end
 
       def method_missing(asset, *args, &config)
         ::Kernel::raise InvalidName, __taken_error_message(asset, 'asset name') if __taken?(asset)

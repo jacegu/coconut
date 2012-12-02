@@ -13,4 +13,12 @@ describe Coconut::Dsl::Application do
       described_class.configure(:current) { to_s {} }
     }.to raise_error Coconut::Dsl::InvalidName, /to_s/
   end
+
+  it 'can load the asset configuration from a folder' do
+    path = '.'
+    Coconut::Dsl::AssetFolder.stub(:config_from).with(path, instance_of(Array)).
+      and_return("asset { environment(:current) { property 'value' } }")
+    config = described_class.configure(:current) { asset_folder path }
+    config.asset.property.should eq 'value'
+  end
 end

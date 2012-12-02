@@ -27,7 +27,7 @@ module Coconut
         instance_methods - PERMANENT_METHODS
       end
 
-      PERMANENT_METHODS = [:instance_eval, :__send__, :object_id, :__taken?, :__taken_error_message]
+      PERMANENT_METHODS = [:instance_eval, :__send__, :object_id, :__taken?, :__taken_error_message, :asset_folder]
     end
   end
 end
