@@ -69,9 +69,9 @@ method (See the *Specifying how the environment should be found* section on
 
 
 ## Coconut Anatomy
-Coconut is composed of three different parts:
+Coconut is composed of **three different parts**:
 
-### Application
+### 1) Application
 Application is the top level block of Coconut. It's composed of the configuration
 of the *Assets* your application has. It may also contain information about
 where Coconut should look for configuration files and how it should find out
@@ -81,19 +81,16 @@ which environment the application is running on.
 require 'coconut'
 
 Coconut.configure MyApp do
-
   # your application configuration
-
 end
 ```
 
-You will enter this block by opening your application's namespace and including
-the Coconut module. When you do that you will trigger the configuration of
-your app. Coconut will then detect the environment, run the configuration and
-create a `Coconut::Config` object with the assets and it's properties for the current
-environment. A `config` method will be defined in the namespace Coconut was
-mixed in. That method will return the `Coconut::Config` object with your
-application's configuration.
+You will enter this block when you call the `Coconut.configure` method passing
+in your application's namespace. Coconut will then detect the environment,
+run the configuration and create a `Coconut::Config` object with the assets
+and it's properties for the current environment. A `config` method will be
+defined in the namespace passed to `configure`. That method will return the
+`Coconut::Config` object with your application's configuration.
 
 That means:
 * You only need to make sure that you require the config file that includes the
@@ -199,7 +196,7 @@ end
 
 Notice that the paths are relative to where the `config.rb` file is located.
 
-### Asset
+### 2) Asset
 Each of this blocks represent one of the assets of your application. Inside
 each one of them you will include the *Asset* properties on each of the
 environments your application will run on.
@@ -228,7 +225,7 @@ An *Asset* can have *almost* any name. There are some restrictions that apply to
 the names. This restrictions apply to both asset names and property names
 and are explained in the *Environment* section of this README.
 
-### Environment
+### 3) Environment
 Environments are the lowest level of a Coconut configuration. Its composed of
 the configuration properties an asset will have on that environment. So,
 essentially, it's a series of key-value pairs.
