@@ -53,8 +53,8 @@ MyApp.config.twitter.consumer_key       # => production_key
 ```
 
 **You don't have to specify the environment when querying for configuration
-values**. Coconut will only run the configuration for the environment it's
-running on.
+values. Coconut will only run the configuration for the environment it's
+running on.**
 
 
 ## How is the environment detected?
@@ -63,19 +63,23 @@ environment the app is running on. If this variable is not set or is empty it
 will default to `:development`.
 
 If your ecosystem uses something that is not RACK based you can specify how
-Coconut needs to find out the environment with the `take_environment_from`
-method (See the *Specifying how the environment should be found* section on
+Coconut should find out the environment with the `environment` method on the
+**Application** level
+(See the *Specifying how the environment should be found* section on
 *Application* under *Coconut Anatomy*).
 
 
 ## Coconut Anatomy
-Coconut is composed of **three different parts**:
+Coconut is composed of **3 different parts**:
 
 ### 1) Application
-Application is the top level block of Coconut. It's composed of the configuration
+*Application is the top level block* of Coconut. It's composed of the configuration
 of the *Assets* your application has. It may also contain information about
-where Coconut should look for configuration files and how it should find out
-which environment the application is running on.
+where Coconut should look for *Asset* configuration files and how it should
+find out which environment the application is running on.
+
+You will enter this block when you call the `Coconut.configure` method passing
+in your application's namespace. 
 
 ```ruby
 require 'coconut'
@@ -85,8 +89,7 @@ Coconut.configure MyApp do
 end
 ```
 
-You will enter this block when you call the `Coconut.configure` method passing
-in your application's namespace. Coconut will then detect the environment,
+Coconut will then detect the environment,
 run the configuration and create a `Coconut::Config` object with the assets
 and it's properties for the current environment. A `config` method will be
 defined in the namespace passed to `configure`. That method will return the
@@ -121,13 +124,12 @@ You can structure the configuration the way that suits you best. Maybe it fits
 in a single file best. Maybe you want to split it and have several configuration
 files. Coconut offers you three different alternatives.
 
-**a) Single file**
+#####a) Single file
 If your configuration is small this is probably the best choice. In this case
 your application section will only be composed of *Assets*. You will need
 nothing more. The first example of this README uses this Coconut flavour.
 
-**b) Folder**
-
+#####b) Folder
 If you want to split your configuration in several files and put them in the
 same folder you will be able to tell Coconut how to find them. Coconut will
 load every file in that folder and run them as if they were Coconut scripts.
@@ -180,9 +182,9 @@ end
 You would only need to require the `config/config.rb` file to access the
 configuration.
 
-**c) List of files**
+#####c) List of files
 
-*NOT DEVELOPED YET*
+*NOT DEVELOPED YET: will be available on next version (0.1.1)*
 
 This flavour is exactly like the *folder* one with the difference that instead
 of providing the path to the folder to the asset configuration files you provide
