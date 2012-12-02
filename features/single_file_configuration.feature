@@ -29,5 +29,3 @@ Feature: Single file configuration
     When I run my application on the "development" environment
      And I query the configuration for "ftp.user"
     Then the configured value should be "root"
-
-

@@ -36,5 +36,3 @@ describe Coconut do
     end
   end
 end
-
-
