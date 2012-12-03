@@ -21,7 +21,7 @@ module Coconut
       private
 
       def asset_folder(path)
-        instance_eval AssetFolder.config_from(path, $LOADED_FEATURES + [::File.expand_path($0)])
+        instance_eval AssetFolder.config_from(path, IGNORED_FILES)
       end
 
       def method_missing(asset, *args, &config)
@@ -29,6 +29,7 @@ module Coconut
         @assets_config[asset] = Asset.configure(@current_environment, &config)
       end
 
+      IGNORED_FILES = ['config.rb']
     end
   end
 end

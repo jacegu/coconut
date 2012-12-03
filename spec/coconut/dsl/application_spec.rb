@@ -16,7 +16,7 @@ describe Coconut::Dsl::Application do
 
   it 'can load the asset configuration from a folder' do
     path = '.'
-    Coconut::Dsl::AssetFolder.stub(:config_from).with(path, instance_of(Array)).
+    Coconut::Dsl::AssetFolder.stub(:config_from).with(path, ['config.rb']).
       and_return("asset { environment(:current) { property 'value' } }")
     config = described_class.configure(:current) { asset_folder path }
     config.asset.property.should eq 'value'

@@ -2,7 +2,7 @@ require 'coconut/dsl/asset_folder'
 
 describe 'Assets configuration from files in folder', :integration do
   let(:path)    { '/tmp/coconut-testing/' }
-  let(:ignored) { ['/tmp/coconut-testing/config.rb'] }
+  let(:ignored) { ['config.rb'] }
 
   let(:config)    { "" }
   let(:s3_config) { "s3       { environment(:current) { property 'p1' } }" }

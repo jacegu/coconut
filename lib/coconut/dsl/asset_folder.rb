@@ -7,7 +7,7 @@ module Coconut
 
       def initialize(path, ignored_files)
         @path = path
-        @ignored_files = ignored_files
+        @ignored_files = ignored_files.map(&method(:path_to))
       end
 
       def assets_config
