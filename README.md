@@ -79,7 +79,7 @@ where Coconut should look for *Asset* configuration files and how it should
 find out which environment the application is running on.
 
 You will enter this block when you call the `Coconut.configure` method passing
-in your application's namespace. 
+in your application's namespace.
 
 ```ruby
 require 'coconut'
@@ -132,9 +132,16 @@ nothing more. The first example of this README uses this Coconut flavour.
 #####b) Folder
 If you want to split your configuration in several files and put them in the
 same folder you will be able to tell Coconut how to find them. Coconut will
-load every file in that folder and run them as if they were Coconut scripts.
+load **every file in that folder and run them as if they were Coconut scripts**.
+
 If the file that has the *Application* level configuration is in that folder
-too it won't be run again:
+too it will be run and will cause an error. You have two options to avoid this:
+
+1. Name that file `config.rb`. By convention Coconut won't run a file in an
+asset folder if it is called like that.
+2. Put the configuration file that has the *Application* level configuration
+in a different folder. In this case the files in the given folder will only
+have *Asset* configuration.
 
 ```ruby
 Coconut.configure MyApp do
@@ -156,7 +163,7 @@ have the following project structure:
     /lib
     /spec
 
-You could have an *Application* block on the `config.rb` file like this
+You could have the *Application* block on the `config.rb` file like this
 (assuming that you run the application from the root of the project):
 
 ```ruby
