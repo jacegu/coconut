@@ -17,7 +17,11 @@ module Coconut
       private
 
       def asset_files_in_folder
-        files_in_folder - @ignored_files
+        ruby_files_in_folder - @ignored_files
+      end
+
+      def ruby_files_in_folder
+        files_in_folder.select { |file| file.match /\.rb$/ }
       end
 
       def files_in_folder

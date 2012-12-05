@@ -1,6 +1,6 @@
 require 'coconut/dsl/asset_folder'
 
-describe 'Assets configuration from files in folder', :integration do
+describe 'Assets configuration from files in folder', integration: true do
   let(:path)    { '/tmp/coconut-testing/' }
   let(:ignored) { ['config.rb'] }
 
@@ -17,6 +17,20 @@ describe 'Assets configuration from files in folder', :integration do
   end
 
   it 'evals every asset file in the folder as application config' do
-    Coconut::Dsl::AssetFolder.config_from(path, ignored).should eq "#{db_config}\n#{s3_config}"
+    configuration_from_folder.should eq "#{db_config}\n#{s3_config}"
+  end
+
+  context 'with other files that are not Ruby files' do
+    before do
+      File.open(File.join(path, 'readme.md'), 'w+') { |f| f.write 'readme' }
+    end
+
+    it 'ignores non Ruby files' do
+      configuration_from_folder.should eq "#{db_config}\n#{s3_config}"
+    end
+  end
+
+  def configuration_from_folder
+    Coconut::Dsl::AssetFolder.config_from(path, ignored)
   end
 end
