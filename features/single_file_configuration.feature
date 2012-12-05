@@ -1,7 +1,7 @@
 Feature: Single file configuration
 
   Scenario: One environment configuration
-    Given my application is configured like this:
+    Given I have my application config in "/tmp/coconut_config/config.rb" with content:
       """
       Coconut.configure(MyApp) do
         ftp do
@@ -16,16 +16,16 @@ Feature: Single file configuration
     Then the configured value should be "root"
 
   Scenario: Several environments configuration
-    Given my application is configured like this:
+    Given I have my application config in "/tmp/coconut_config/config.rb" with content:
       """
       Coconut.configure(MyApp) do
-        ftp do
+        ssh do
           environment(:development, :staging, :production) do
-            user 'root'
+            login 'username'
           end
         end
       end
       """
     When I run my application on the "development" environment
-     And I query the configuration for "ftp.user"
-    Then the configured value should be "root"
+     And I query the configuration for "ssh.login"
+    Then the configured value should be "username"
