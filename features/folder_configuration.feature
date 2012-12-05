@@ -33,7 +33,6 @@ Feature: Load configuration from folder
       And I query the configuration for "s3.key"
      Then the configured value should be "xxx"
 
-
   Scenario: Application file and assets file in different folders
     Given I have my application config in "/tmp/coconut.rb" with content:
       """
