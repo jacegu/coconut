@@ -199,7 +199,7 @@ the path to every one of them:
 
 ```ruby
 Coconut.configure MyApp do
-  assets_files 'database.rb', 'oauth.rb', 's3.rb'
+  asset_files 'database.rb', 'oauth.rb', 's3.rb'
 end
 ```
 
