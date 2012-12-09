@@ -5,10 +5,16 @@ module Coconut
       @config = config_from(properties)
     end
 
+    # Coconut::Config objects will respond to methods if its name is
+    # equal to any of the configured properties. This method is redefined to
+    # make its behaviour consistent with Coconut::Config#method_missing
+    #
+    # @return [Boolean] whether a config object knows how to respond to method "name"
     def respond_to?(name)
       property?(name) or super
     end
 
+    # @return [Hash] a Hash representation of the configuration object
     def to_hash
       @properties.dup
     end
