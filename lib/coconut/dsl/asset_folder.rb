@@ -1,3 +1,5 @@
+require_relative 'asset_file_list'
+
 module Coconut
   module Dsl
     class AssetFolder
@@ -11,7 +13,7 @@ module Coconut
       end
 
       def assets_config
-        AssetFileList.new(asset_files_in_folder).assets_config
+        AssetFileList.new(*asset_files_in_folder).assets_config
       end
 
       private
@@ -37,30 +39,5 @@ module Coconut
       end
     end
 
-    class AssetFileList
-      def initialize(paths)
-        @files = paths.map { |file| asset_config_in(file) }
       end
-
-      def assets_config
-        @files.map { |file| file.asset_config }.join("\n")
-      end
-
-      private
-
-      def asset_config_in(file)
-        AssetFile.new(file)
-      end
-    end
-
-    class AssetFile
-      def initialize(path)
-        @path = path
-      end
-
-      def asset_config
-        File.read(@path)
-      end
-    end
-  end
 end
