@@ -11,7 +11,7 @@ module Coconut
       end
 
       def assets_config
-        asset_files_in_folder.map { |file| content(file) }.join "\n"
+        AssetFileList.new(asset_files_in_folder).assets_config
       end
 
       private
@@ -32,12 +32,34 @@ module Coconut
         Dir.open(@path)
       end
 
-      def content(file)
-        File.read(file)
-      end
-
       def path_to(file)
         File.expand_path(File.join(@path, file))
+      end
+    end
+
+    class AssetFileList
+      def initialize(paths)
+        @files = paths.map { |file| asset_config_in(file) }
+      end
+
+      def assets_config
+        @files.map { |file| file.asset_config }.join("\n")
+      end
+
+      private
+
+      def asset_config_in(file)
+        AssetFile.new(file)
+      end
+    end
+
+    class AssetFile
+      def initialize(path)
+        @path = path
+      end
+
+      def asset_config
+        File.read(@path)
       end
     end
   end
