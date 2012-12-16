@@ -24,6 +24,10 @@ module Coconut
         instance_eval AssetFolder.config_from(path, IGNORED_FILES)
       end
 
+      def asset_files(*files)
+        instance_eval AssetFileList.config_from(*files)
+      end
+
       def method_missing(asset, *args, &config)
         ::Kernel::raise InvalidName, __taken_error_message(asset, 'asset name') if __taken?(asset)
         @assets_config[asset] = Asset.configure(@current_environment, &config)

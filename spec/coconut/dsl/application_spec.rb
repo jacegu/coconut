@@ -21,4 +21,11 @@ describe Coconut::Dsl::Application do
     config = described_class.configure(:current) { asset_folder path }
     config.asset.property.should eq 'value'
   end
+
+  it 'can load asset configuration from a list of files' do
+    Coconut::Dsl::AssetFileList.stub(:config_from).with('/file/path.rb').
+      and_return("asset { environment(:current) { property 'value' } }")
+    config = described_class.configure(:current) { asset_files '/file/path.rb' }
+    config.asset.property.should eq 'value'
+  end
 end
