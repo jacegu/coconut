@@ -6,3 +6,6 @@
 ## Version 0.1.0
 - Remove Hashie dependency.
 - Add *folder flavour* support.
+
+## Version 0.1.1
+- Add *file list flavour* support.
