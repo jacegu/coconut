@@ -1,3 +1,5 @@
+require_relative 'asset_file_list'
+
 module Coconut
   module Dsl
     class AssetFolder
@@ -11,7 +13,7 @@ module Coconut
       end
 
       def assets_config
-        asset_files_in_folder.map { |file| content(file) }.join "\n"
+        AssetFileList.new(*asset_files_in_folder).assets_config
       end
 
       private
@@ -32,13 +34,10 @@ module Coconut
         Dir.open(@path)
       end
 
-      def content(file)
-        File.read(file)
-      end
-
       def path_to(file)
         File.expand_path(File.join(@path, file))
       end
     end
-  end
+
+      end
 end
