@@ -119,91 +119,10 @@ what environment the application is running on. Therefore **the environment
 will be the return value of that block**.
 
 
-#### Coconut flavours (a.k.a. how to structure your configuration).
-You can structure the configuration the way that suits you best. Maybe it fits
-in a single file best. Maybe you want to split it and have several configuration
-files. Coconut offers you three different alternatives.
-
-#####a) Single file
-If your configuration is small this is probably the best choice. In this case
-your application section will only be composed of *Assets*. You will need
-nothing more. The first example of this README uses this Coconut flavour.
-
-#####b) Folder
-If you want to split your configuration in several files and put them in the
-same folder you will be able to tell Coconut how to find them. Coconut will
-load **every file in that folder and run them as if they were Coconut scripts**.
-
-If the file that has the *Application* level configuration is in that folder
-too it will be run and will cause an error. You have two options to avoid this:
-
-1. Name that file `config.rb`. By convention Coconut won't run a file in an
-asset folder if it is called like that.
-2. Put the configuration file that has the *Application* level configuration
-in a different folder. In this case the files in the given folder will only
-have *Asset* configuration.
-
-```ruby
-Coconut.configure MyApp do
-  asset_folder 'path/to/folder'
-end
-```
-
-This allows you to write your files focusing only on *Assets*, given that
-when Coconut will run then within the *Application* block. So you could
-have the following project structure:
-
-    .
-    ..
-    /config
-      config.rb
-      database.rb
-      oauth.rb
-      s3.rb
-    /lib
-    /spec
-
-You could have the *Application* block on the `config.rb` file like this
-(assuming that you run the application from the root of the project):
-
-```ruby
-Coconut.configure MyApp do
-  asset_folder 'config'
-end
-```
-
-And each of the asset files would only include asset configuration:
-
-```ruby
-database do
-  environment :development do
-    #...
-  end
-
-  environment :staging, :production do
-    #...
-  end
-end
-```
-
-You would only need to require the `config/config.rb` file to access the
-configuration.
-
-#####c) List of files
-
-*NOT DEVELOPED YET: will be available on next version (0.1.1)*
-
-This flavour is exactly like the *folder* one with the difference that instead
-of providing the path to the folder to the asset configuration files you provide
-the path to every one of them:
-
-```ruby
-Coconut.configure MyApp do
-  asset_files 'database.rb', 'oauth.rb', 's3.rb'
-end
-```
-
-Notice that the paths are relative to where the `config.rb` file is located.
+#### Coconut flavours (how to structure your configuration).
+You can structure the configuration in several ways with coconut. See
+[coconut flavours](https://github.com/jacegu/coconut/wiki/Coconut-flavours--(how-to-split-your-configuration))
+in the wiki.
 
 ### 2) Asset
 Each of this blocks represent one of the assets of your application. Inside
