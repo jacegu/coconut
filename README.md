@@ -121,7 +121,7 @@ will be the return value of that block**.
 
 #### Coconut flavours (how to structure your configuration).
 You can structure the configuration in several ways with coconut. See
-[coconut flavours](https://github.com/jacegu/coconut/wiki/Coconut-flavours--(how-to-split-your-configuration))
+[coconut flavours](https://github.com/jacegu/coconut/wiki/Coconut-flavours--\(how-to-split-your-configuration\))
 in the wiki.
 
 ### 2) Asset
