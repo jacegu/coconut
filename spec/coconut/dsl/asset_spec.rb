@@ -46,4 +46,15 @@ describe Coconut::Dsl::Asset do
     asset_config.fetch(:property3).should eq 3
     asset_config.fetch(:property4).should eq 4
   end
+
+  it 'has a setup hook' do
+    setup_value = nil
+    asset_config = described_class.configure(:current) do
+      env(:current) { property 'value' }
+      setup do
+        setup_value = property
+      end
+    end
+    setup_value.should eq 'value'
+  end
 end

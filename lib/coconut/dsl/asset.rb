@@ -1,5 +1,5 @@
-require_relative '../config'
 require_relative './environment'
+require_relative './asset_setup'
 
 module Coconut
   module Dsl
@@ -19,6 +19,10 @@ module Coconut
       end
 
       private
+
+      def setup(&code)
+        AssetSetup.new(@properties).instance_eval(&code)
+      end
 
       def environment(*environments, &config)
         environments.each { |environment| __configure(environment, config) }
