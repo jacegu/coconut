@@ -13,7 +13,11 @@ describe Coconut::Dsl::AssetFile do
     File.delete('/tmp/asset.rb')
   end
 
-  it 'reads the content of the asset file at path' do
+  it 'has a path in the file system' do
+    subject.path.should eq path
+  end
+
+  it 'reads the content of the file at path' do
     subject.asset_config.should eq config
   end
 end
