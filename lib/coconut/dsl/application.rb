@@ -1,5 +1,6 @@
 require_relative 'asset'
 require_relative 'asset_folder'
+require_relative 'asset_file_list'
 
 module Coconut
   module Dsl
@@ -15,7 +16,7 @@ module Coconut
       def run(&config)
         @assets_config = {}
         instance_eval &config
-        Config.new(@assets_config)
+        Config.with(@assets_config)
       end
 
       private
