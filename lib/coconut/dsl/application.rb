@@ -21,11 +21,15 @@ module Coconut
       private
 
       def asset_folder(path)
-        instance_eval AssetFolder.config_from(path, IGNORED_FILES)
+        AssetFolder.new(path, IGNORED_FILES).each do |asset_config, path|
+          instance_eval(asset_config, path)
+        end
       end
 
       def asset_files(*files)
-        instance_eval AssetFileList.config_from(*files)
+        AssetFileList.new(*files).each do |asset_config, path|
+          instance_eval(asset_config, path)
+        end
       end
 
       def method_missing(asset, *args, &config)

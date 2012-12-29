@@ -15,17 +15,26 @@ describe Coconut::Dsl::Application do
   end
 
   it 'can load the asset configuration from a folder' do
-    path = '.'
-    Coconut::Dsl::AssetFolder.stub(:config_from).with(path, ['config.rb']).
-      and_return("asset { environment(:current) { property 'value' } }")
-    config = described_class.configure(:current) { asset_folder path }
+    asset_path = '/file/path.rb'
+    asset_config = "asset { environment(:current) { property 'value' } }"
+
+    asset_folder = stub(:asset_folder)
+    Coconut::Dsl::AssetFolder.stub(:new).and_return(asset_folder)
+    asset_folder.stub(:each).and_yield(asset_config, asset_path)
+
+    config = described_class.configure(:current) { asset_folder '.' }
     config.asset.property.should eq 'value'
   end
 
-  it 'can load asset configuration from a list of files' do
-    Coconut::Dsl::AssetFileList.stub(:config_from).with('/file/path.rb').
-      and_return("asset { environment(:current) { property 'value' } }")
-    config = described_class.configure(:current) { asset_files '/file/path.rb' }
+  it 'can load asset configuration from a list of asset files' do
+    asset_path = '/file/path.rb'
+    asset_config = "asset { environment(:current) { property 'value' } }"
+
+    asset_file_list = stub(:asset_file_list)
+    Coconut::Dsl::AssetFileList.stub(:new).and_return(asset_file_list)
+    asset_file_list.stub(:each).and_yield(asset_config, asset_path)
+
+    config = described_class.configure(:current) { asset_files asset_path }
     config.asset.property.should eq 'value'
   end
 end

@@ -3,17 +3,13 @@ require_relative 'asset_file_list'
 module Coconut
   module Dsl
     class AssetFolder
-      def self.config_from(path, ignored_files)
-        new(path, ignored_files).assets_config
-      end
-
       def initialize(path, ignored_files)
         @path = path
         @ignored_files = ignored_files.map(&method(:path_to))
       end
 
-      def assets_config
-        AssetFileList.new(*asset_files_in_folder).assets_config
+      def each(&block)
+        AssetFileList.new(*asset_files_in_folder).each(&block)
       end
 
       private
@@ -39,5 +35,5 @@ module Coconut
       end
     end
 
-      end
+  end
 end
