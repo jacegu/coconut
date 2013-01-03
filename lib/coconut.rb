@@ -9,19 +9,19 @@ module Coconut
   end
 
   def self.environment
-    return @__coconut_environment.() unless @__coconut_environment.nil?
+    return @_coconut_environment.() unless @_coconut_environment.nil?
     ENV['RACK_ENV'] || :development
   end
 
   def self.take_environment_from(&block)
-    @__coconut_environment = block
+    @_coconut_environment = block
   end
 
   private
 
   def self.define_config_method(namespace, configuration)
     namespace.singleton_class.instance_eval do
-      define_method(:config) { @__coconut_configuration ||= configuration }
+      define_method(:config) { @_coconut_configuration ||= configuration }
     end
   end
 end

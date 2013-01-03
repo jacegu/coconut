@@ -1,9 +1,19 @@
 require 'coconut'
 
-class  MyClass; end
-module MyModule; end
 
 describe Coconut do
+  before do
+    class  MyClass; end
+    module MyModule; end
+  end
+
+  after do
+    Object.instance_eval do
+      remove_const(:MyClass)
+      remove_const(:MyModule)
+    end
+  end
+
   it 'defines a config method in the provided namespace' do
     Coconut.configure(MyClass){}
     MyClass.should respond_to(:config)
@@ -18,7 +28,7 @@ describe Coconut do
   end
 
   context 'finding out the environment' do
-    before { Coconut.instance_variable_set(:@__coconut_environment, nil) }
+    before { Coconut.instance_variable_set(:@_coconut_environment, nil) }
 
     it 'uses the expression provided by the user if any' do
       Coconut.take_environment_from { :somewhere }

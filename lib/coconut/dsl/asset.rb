@@ -25,18 +25,18 @@ module Coconut
       end
 
       def environment(*environments, &config)
-        environments.each { |environment| __configure(environment, config) }
+        environments.each { |environment| _configure(environment, config) }
       end
 
       alias :env          :environment
       alias :envs         :environment
       alias :environments :environment
 
-      def __configure(environment, config)
-        @properties.merge! Environment.configure(&config) if __current?(environment)
+      def _configure(environment, config)
+        @properties.merge! Environment.configure(&config) if _current?(environment)
       end
 
-      def __current?(environment)
+      def _current?(environment)
         @current_environment.to_sym == environment.to_sym
       end
     end

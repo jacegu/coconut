@@ -34,6 +34,5 @@ module Coconut
         File.expand_path(File.join(@path, file))
       end
     end
-
   end
 end
