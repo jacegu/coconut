@@ -15,10 +15,6 @@ module Coconut
         Config.instance_methods.include? name
       end
 
-      def __taken_error_message(name, usage)
-        "#{name} can't be used as #{usage}: it will collide with Coconut::Config methods"
-      end
-
       def self.inherited(subclass)
         __eraseable_methods.each{ |method_name| undef_method method_name }
       end

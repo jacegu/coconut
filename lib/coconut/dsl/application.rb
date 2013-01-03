@@ -34,7 +34,7 @@ module Coconut
       end
 
       def method_missing(asset, *args, &config)
-        ::Kernel::raise InvalidName, __taken_error_message(asset, 'asset name') if __taken?(asset)
+        ::Kernel::raise InvalidName, "#{asset} can't be used as asset name" if __taken?(asset)
         @assets_config[asset] = Asset.configure(@current_environment, &config)
       end
 
