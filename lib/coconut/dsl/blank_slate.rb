@@ -6,24 +6,24 @@ module Coconut
 
     class BlankSlate < BasicObject
       def self.__forbidden_names
-        Config.instance_methods + PERMANENT_METHODS
+        Config.instance_methods + PERMANENT_PUBLIC_METHODS
       end
 
       private
+
+      def _taken?(name)
+        Config.instance_methods.include? name
+      end
 
       def self.inherited(subclass)
         _eraseable_methods.each{ |method_name| undef_method method_name }
       end
 
       def self._eraseable_methods
-        instance_methods - PERMANENT_METHODS
+        instance_methods - PERMANENT_PUBLIC_METHODS
       end
 
-      def _taken?(name)
-        Config.instance_methods.include? name
-      end
-
-      PERMANENT_METHODS = [:instance_eval, :__send__, :object_id, :_taken?, :asset_folder]
+      PERMANENT_PUBLIC_METHODS = [:instance_eval, :__send__, :object_id, :__forbidden_names]
     end
   end
 end
