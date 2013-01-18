@@ -21,6 +21,13 @@ describe Coconut do
     MyModule.should respond_to(:config)
   end
 
+  it 'defines a config constant in the provided namespace' do
+    Coconut.configure(MyClass){}
+    MyClass::Config.should_not be_nil
+    Coconut.configure(MyModule){}
+    MyModule::Config.should_not be_nil
+  end
+
   it "allows the app's configuration to be run twice" do
     Coconut.configure(MyClass) { asset { env(:development){ property 'initial value' } } }
     Coconut.configure(MyClass) { asset { env(:development){ property 'latest value'  } } }

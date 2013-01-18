@@ -5,7 +5,9 @@ module Coconut
   include Dsl
 
   def self.configure(namespace, &config)
-    define_config_method namespace, Application.configure(environment, &config)
+    config = Application.configure(environment, &config)
+    define_config_method(namespace, config)
+    define_config_constant(namespace, config)
   end
 
   def self.environment
@@ -22,6 +24,13 @@ module Coconut
   def self.define_config_method(namespace, configuration)
     namespace.singleton_class.instance_eval do
       define_method(:config) { @_coconut_configuration ||= configuration }
+    end
+  end
+
+  def self.define_config_constant(namespace, configuration)
+    namespace.instance_eval do
+      remove_const('Config') if const_defined?('Config', false)
+      const_set('Config', configuration)
     end
   end
 end
