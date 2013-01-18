@@ -63,8 +63,8 @@ environment the app is running on. If this variable is not set or is empty it
 will default to `:development`.
 
 If your ecosystem uses something that is not RACK based you can specify how
-Coconut should find out the environment with the `environment` method on the
-**Application** level
+Coconut should find out the environment with the `take_environment_from` method 
+on the **Application** level
 (See the *Specifying how the environment should be found* section on
 *Application* under *Coconut Anatomy*).
 
@@ -109,7 +109,7 @@ determine which configuration to use you can tell Coconut how to find out:
 
 ```ruby
 Coconut.configure MyApp do
-  environment { MyApp::find_out_environment }
+  take_environment_from { MyApp::find_out_environment }
   # ...
 end
 ```
