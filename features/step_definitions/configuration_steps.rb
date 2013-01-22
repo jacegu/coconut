@@ -19,3 +19,8 @@ end
 Then /^the configured value should be "(.*?)"$/ do |expected_result|
   eval(@query).should eq expected_result
 end
+
+Then /^my setup block should have been called with the correct values$/ do
+  DummyFtp.user.should eq 'root'
+  DummyFtp.pass.should eq '1234'
+end

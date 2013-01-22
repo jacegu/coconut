@@ -20,7 +20,7 @@ module Coconut
       private
 
       def method_missing(name, *args, &block)
-        ::Kernel::raise InvalidName, __taken_error_message(name, 'property name') if __taken?(name)
+        ::Kernel::raise InvalidName, "#{name} can't be used as property name" if _taken?(name)
         @properties[name] = args.first
       end
     end

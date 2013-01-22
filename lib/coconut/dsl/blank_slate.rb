@@ -2,32 +2,33 @@ require_relative '../config'
 
 module Coconut
   module Dsl
-    class InvalidName < Exception; end
+    class InvalidName < RuntimeError; end
 
     class BlankSlate < BasicObject
       def self.__forbidden_names
-        Config.instance_methods + PERMANENT_METHODS
+        Config.instance_methods + PERMANENT_PUBLIC_METHODS
       end
 
       private
 
-      def __taken?(name)
+      def _taken?(name)
         Config.instance_methods.include? name
       end
 
-      def __taken_error_message(name, usage)
-        "#{name} can't be used as #{usage}: it will collide with Coconut::Config methods"
+      def self.const_missing(name)
+        super unless self.class.const_defined?(name)
+        self.class.const_get(name)
       end
 
       def self.inherited(subclass)
-        __eraseable_methods.each{ |method_name| undef_method method_name }
+        _eraseable_methods.each{ |method_name| undef_method method_name }
       end
 
-      def self.__eraseable_methods
-        instance_methods - PERMANENT_METHODS
+      def self._eraseable_methods
+        instance_methods - PERMANENT_PUBLIC_METHODS
       end
 
-      PERMANENT_METHODS = [:instance_eval, :__send__, :object_id, :__taken?, :__taken_error_message, :asset_folder]
+      PERMANENT_PUBLIC_METHODS = [:instance_eval, :__send__, :object_id, :__forbidden_names]
     end
   end
 end

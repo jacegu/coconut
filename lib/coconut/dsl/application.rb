@@ -1,5 +1,6 @@
 require_relative 'asset'
 require_relative 'asset_folder'
+require_relative 'asset_file_list'
 
 module Coconut
   module Dsl
@@ -15,21 +16,25 @@ module Coconut
       def run(&config)
         @assets_config = {}
         instance_eval &config
-        Config.new(@assets_config)
+        Config.with(@assets_config)
       end
 
       private
 
       def asset_folder(path)
-        instance_eval AssetFolder.config_from(path, IGNORED_FILES)
+        AssetFolder.new(path, IGNORED_FILES).each do |asset_config, path|
+          instance_eval(asset_config, path)
+        end
       end
 
       def asset_files(*files)
-        instance_eval AssetFileList.config_from(*files)
+        AssetFileList.new(*files).each do |asset_config, path|
+          instance_eval(asset_config, path)
+        end
       end
 
       def method_missing(asset, *args, &config)
-        ::Kernel::raise InvalidName, __taken_error_message(asset, 'asset name') if __taken?(asset)
+        ::Kernel::raise InvalidName, "#{asset} can't be used as asset name" if _taken?(asset)
         @assets_config[asset] = Asset.configure(@current_environment, &config)
       end
 
