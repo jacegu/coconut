@@ -13,7 +13,8 @@ module Coconut
 
   def self.configure(namespace, &config)
     config = Application.configure(environment, &config)
-    define_config_method(namespace, config)
+    check_for_unconfigured_assets(config)
+        define_config_method(namespace, config)
     define_config_constant(namespace, config)
   end
 
@@ -38,6 +39,13 @@ module Coconut
     namespace.instance_eval do
       remove_const(:CONFIG) if const_defined?(:CONFIG, false)
       const_set(:CONFIG, configuration)
+    end
+  end
+
+  def self.check_for_unconfigured_assets(config)
+    config.to_hash.each do |asset, properties|
+      Kernel.warn "WARNING: \"#{asset}\" asset has no properties set up for \
+                   current environment (#{environment})" if properties.empty?
     end
   end
 end

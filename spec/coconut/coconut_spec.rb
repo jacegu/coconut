@@ -34,6 +34,13 @@ describe Coconut do
     MyClass::config.asset.property.should eq 'latest value'
   end
 
+  it 'checks the configuration for assets without properties' do
+    Kernel.should_receive(:warn).with(/asset|current environment|development/)
+    Coconut.configure MyClass do
+      asset {}
+    end
+  end
+
   context 'when included' do
     it 'defines a configure method' do
       module MyModule; include Coconut; end
