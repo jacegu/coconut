@@ -15,6 +15,11 @@ module Coconut
         Config.instance_methods.include? name
       end
 
+      def self.const_missing(name)
+        super unless self.class.const_defined?(name)
+        self.class.const_get(name)
+      end
+
       def self.inherited(subclass)
         _eraseable_methods.each{ |method_name| undef_method method_name }
       end
