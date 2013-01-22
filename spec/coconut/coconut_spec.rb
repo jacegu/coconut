@@ -34,6 +34,13 @@ describe Coconut do
     MyClass::config.asset.property.should eq 'latest value'
   end
 
+  context 'when included' do
+    it 'defines a configure method' do
+      module MyModule; include Coconut; end
+      expect { module MyModule; configure{}; end }.not_to raise_error
+    end
+  end
+
   context 'finding out the environment' do
     before { Coconut.instance_variable_set(:@_coconut_environment, nil) }
 

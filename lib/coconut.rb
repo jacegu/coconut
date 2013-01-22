@@ -4,6 +4,13 @@ require_relative 'coconut/dsl/application'
 module Coconut
   include Dsl
 
+  def self.included(base)
+    configure_method = method(:configure)
+    base.singleton_class.instance_eval do
+      define_method(:configure) { |*args, &block| configure_method.(base, &block) }
+    end
+  end
+
   def self.configure(namespace, &config)
     config = Application.configure(environment, &config)
     define_config_method(namespace, config)
@@ -29,8 +36,8 @@ module Coconut
 
   def self.define_config_constant(namespace, configuration)
     namespace.instance_eval do
-      remove_const('Config') if const_defined?('Config', false)
-      const_set('Config', configuration)
+      remove_const(:CONFIG) if const_defined?(:CONFIG, false)
+      const_set(:CONFIG, configuration)
     end
   end
 end
