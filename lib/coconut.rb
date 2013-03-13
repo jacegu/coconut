@@ -14,7 +14,7 @@ module Coconut
   def self.configure(namespace, &config)
     config = Application.configure(environment, &config)
     check_for_unconfigured_assets(config)
-        define_config_method(namespace, config)
+    define_config_method(namespace, config)
     define_config_constant(namespace, config)
   end
 
