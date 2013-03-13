@@ -57,4 +57,11 @@ describe Coconut::Dsl::Asset do
     end
     setup_value.should eq 'value'
   end
+
+  it 'can be configured for all enviroments at the same time' do
+    asset_config = described_class.configure(:current) do
+      env(:all) { property 'value' }
+    end
+    asset_config.fetch(:property).should eq 'value'
+  end
 end

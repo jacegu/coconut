@@ -37,7 +37,7 @@ module Coconut
       end
 
       def _current?(environment)
-        @current_environment.to_sym == environment.to_sym
+        @current_environment.to_sym == environment.to_sym || environment == :all
       end
     end
   end
