@@ -28,7 +28,7 @@ module Coconut
         instance_methods - PERMANENT_PUBLIC_METHODS
       end
 
-      PERMANENT_PUBLIC_METHODS = [:instance_eval, :__send__, :object_id, :__forbidden_names]
+      PERMANENT_PUBLIC_METHODS = [:instance_eval, :__send__, :object_id, :__id__, :__forbidden_names]
     end
   end
 end
