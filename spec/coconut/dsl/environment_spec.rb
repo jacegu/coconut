@@ -12,8 +12,8 @@ describe Coconut::Dsl::Environment do
 
   it "doesn't allow properties with colliding names" do
     expect {
-      described_class.configure { object_id '11' }
-    }.to raise_error Coconut::Dsl::InvalidName, /object_id/
+      described_class.configure { send '11' }
+    }.to raise_error Coconut::Dsl::InvalidName, /send/
   end
 
   it 'can take procs as property values' do

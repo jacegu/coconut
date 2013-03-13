@@ -7,7 +7,7 @@ describe Coconut::Config do
 
   context 'newly created' do
     it 'has no property methods' do
-      (subject.public_methods - Class.public_methods).should eq [:with, :to_hash]
+      (subject.public_methods - Class.public_methods).should include(:with, :to_hash)
     end
 
    it 'responds to every property' do
