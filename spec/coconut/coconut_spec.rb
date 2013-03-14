@@ -29,13 +29,13 @@ describe Coconut do
   end
 
   it "allows the app's configuration to be run twice" do
-    Coconut.configure(MyClass) { asset { env(:development){ property 'initial value' } } }
-    Coconut.configure(MyClass) { asset { env(:development){ property 'latest value'  } } }
+    Coconut.configure(MyClass) { asset { env(:test){ property 'initial value' } } }
+    Coconut.configure(MyClass) { asset { env(:test){ property 'latest value'  } } }
     MyClass::config.asset.property.should eq 'latest value'
   end
 
   it 'checks the configuration for assets without properties' do
-    Kernel.should_receive(:warn).with(/asset|current environment|development/)
+    Kernel.should_receive(:warn).with(/asset|current environment|test/)
     Coconut.configure MyClass do
       asset {}
     end
