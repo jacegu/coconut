@@ -4,6 +4,9 @@
 .bundle
 .config
 .rbx
+.rvmrc
+.rbenv-gemsets
+.ruby-version
 coverage
 InstalledFiles
 lib/bundler/man
