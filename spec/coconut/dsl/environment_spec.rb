@@ -19,12 +19,10 @@ describe Coconut::Dsl::Environment do
   it 'can take procs as property values' do
     config = described_class.configure do
       property1 Proc.new { 'value' }
-      property2 -> { 'value' }
-      property3 Kernel::lambda { 'value' }
+      property2 Kernel::lambda { 'value' }
     end
     config.fetch(:property1).should be_a_kind_of Proc
     config.fetch(:property2).should be_a_kind_of Proc
-    config.fetch(:property3).should be_a_kind_of Proc
   end
 
   it 'can take expressions as property values' do
